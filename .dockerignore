@@ -1,0 +1,12 @@
+# Docker ignore file
+# Ignore node_modules, build outputs, and local IDE configs
+node_modules/
+dist/
+backend/*/bin/
+backend/*/obj/
+frontend/collab-whiteboard-ui/node_modules/
+frontend/collab-whiteboard-ui/dist/
+.git/
+.vs/
+.idea/
+*.user

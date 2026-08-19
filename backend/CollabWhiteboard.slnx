@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="CollabWhiteboard.API/CollabWhiteboard.API.csproj" />
+  <Project Path="CollabWhiteboard.Tests/CollabWhiteboard.Tests.csproj" />
+</Solution>
