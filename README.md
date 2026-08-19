@@ -1,2 +1,2 @@
-# Collaboration-board
+# Collaboration-board-front end
 Collaboration board
