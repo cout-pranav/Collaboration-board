@@ -1,6 +1,6 @@
 <template>
   <div class="whiteboard-view">
-    <Toolbar
+    <AppToolbar
       v-model="toolMode"
       v-model:color="drawColor"
       v-model:stroke-width="strokeWidth"
@@ -33,7 +33,7 @@ import { useWhiteboardStore } from '@/stores/whiteboardStore'
 import { useAuthStore } from '@/stores/authStore'
 import { useCollaboration } from '@/composables/useCollaboration'
 import { boardsApi } from '@/services/apiService'
-import Toolbar from '@/components/ui/Toolbar.vue'
+import AppToolbar from '@/components/ui/AppToolbar.vue'
 import WhiteboardCanvas from '@/components/canvas/WhiteboardCanvas.vue'
 import type { ToolMode } from '@/types/whiteboard'
 

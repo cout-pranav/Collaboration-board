@@ -70,7 +70,7 @@
 import { ref } from 'vue'
 import type { Card } from '@/types/whiteboard'
 
-const props = defineProps<{
+defineProps<{
   card: Card
   isSelected?: boolean
 }>()

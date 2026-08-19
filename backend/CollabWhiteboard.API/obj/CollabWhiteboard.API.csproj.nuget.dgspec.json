@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\prana\\.gemini\\antigravity\\scratch\\collaborative-whiteboard\\backend\\CollabWhiteboard.API\\CollabWhiteboard.API.csproj": {}
+    "C:\\Users\\prana\\.gemini\\antigravity\\scratch\\Collaboration-board\\backend\\CollabWhiteboard.API\\CollabWhiteboard.API.csproj": {}
   },
   "projects": {
-    "C:\\Users\\prana\\.gemini\\antigravity\\scratch\\collaborative-whiteboard\\backend\\CollabWhiteboard.API\\CollabWhiteboard.API.csproj": {
+    "C:\\Users\\prana\\.gemini\\antigravity\\scratch\\Collaboration-board\\backend\\CollabWhiteboard.API\\CollabWhiteboard.API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\prana\\.gemini\\antigravity\\scratch\\collaborative-whiteboard\\backend\\CollabWhiteboard.API\\CollabWhiteboard.API.csproj",
+        "projectUniqueName": "C:\\Users\\prana\\.gemini\\antigravity\\scratch\\Collaboration-board\\backend\\CollabWhiteboard.API\\CollabWhiteboard.API.csproj",
         "projectName": "CollabWhiteboard.API",
-        "projectPath": "C:\\Users\\prana\\.gemini\\antigravity\\scratch\\collaborative-whiteboard\\backend\\CollabWhiteboard.API\\CollabWhiteboard.API.csproj",
+        "projectPath": "C:\\Users\\prana\\.gemini\\antigravity\\scratch\\Collaboration-board\\backend\\CollabWhiteboard.API\\CollabWhiteboard.API.csproj",
         "packagesPath": "C:\\Users\\prana\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\prana\\.gemini\\antigravity\\scratch\\collaborative-whiteboard\\backend\\CollabWhiteboard.API\\obj\\",
+        "outputPath": "C:\\Users\\prana\\.gemini\\antigravity\\scratch\\Collaboration-board\\backend\\CollabWhiteboard.API\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

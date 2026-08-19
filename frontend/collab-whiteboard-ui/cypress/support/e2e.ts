@@ -33,6 +33,7 @@ Cypress.Commands.add('registerApi', (email: string, password: string, displayNam
 })
 
 declare global {
+  // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace Cypress {
     interface Chainable {
       loginApi(email: string, password: string): Chainable<void>

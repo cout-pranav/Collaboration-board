@@ -12,12 +12,10 @@
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "9.0.7",
           "Microsoft.AspNetCore.OpenApi": "10.0.11",
           "Microsoft.AspNetCore.SignalR.Client": "9.0.7",
-          "Microsoft.Azure.SignalR": "1.30.0",
+          "Microsoft.Azure.SignalR": "1.33.1",
           "Microsoft.EntityFrameworkCore.Design": "9.0.7",
           "Microsoft.EntityFrameworkCore.SqlServer": "9.0.7",
-          "Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore": "9.0.7",
-          "Microsoft.OpenApi": "2.7.5",
-          "Swashbuckle.AspNetCore": "9.0.1"
+          "Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore": "9.0.7"
         },
         "runtime": {
           "CollabWhiteboard.API.dll": {}
@@ -119,28 +117,28 @@
           }
         }
       },
-      "Microsoft.Azure.SignalR/1.30.0": {
+      "Microsoft.Azure.SignalR/1.33.1": {
         "dependencies": {
           "Azure.Identity": "1.11.4",
-          "Microsoft.Azure.SignalR.Protocols": "1.30.0",
+          "Microsoft.Azure.SignalR.Protocols": "1.33.1",
           "Newtonsoft.Json": "13.0.3"
         },
         "runtime": {
           "lib/net8.0/Microsoft.Azure.SignalR.Common.dll": {
-            "assemblyVersion": "1.30.0.0",
-            "fileVersion": "1.30.0.0"
+            "assemblyVersion": "1.33.1.0",
+            "fileVersion": "1.33.1.0"
           },
           "lib/net8.0/Microsoft.Azure.SignalR.dll": {
-            "assemblyVersion": "1.30.0.0",
-            "fileVersion": "1.30.0.0"
+            "assemblyVersion": "1.33.1.0",
+            "fileVersion": "1.33.1.0"
           }
         }
       },
-      "Microsoft.Azure.SignalR.Protocols/1.30.0": {
+      "Microsoft.Azure.SignalR.Protocols/1.33.1": {
         "runtime": {
           "lib/netstandard2.0/Microsoft.Azure.SignalR.Protocols.dll": {
-            "assemblyVersion": "1.30.0.0",
-            "fileVersion": "1.30.0.0"
+            "assemblyVersion": "1.33.1.0",
+            "fileVersion": "1.33.1.0"
           }
         }
       },
@@ -701,43 +699,6 @@
           }
         }
       },
-      "Swashbuckle.AspNetCore/9.0.1": {
-        "dependencies": {
-          "Swashbuckle.AspNetCore.Swagger": "9.0.1",
-          "Swashbuckle.AspNetCore.SwaggerGen": "9.0.1",
-          "Swashbuckle.AspNetCore.SwaggerUI": "9.0.1"
-        }
-      },
-      "Swashbuckle.AspNetCore.Swagger/9.0.1": {
-        "dependencies": {
-          "Microsoft.OpenApi": "2.7.5"
-        },
-        "runtime": {
-          "lib/net9.0/Swashbuckle.AspNetCore.Swagger.dll": {
-            "assemblyVersion": "9.0.1.0",
-            "fileVersion": "9.0.1.1541"
-          }
-        }
-      },
-      "Swashbuckle.AspNetCore.SwaggerGen/9.0.1": {
-        "dependencies": {
-          "Swashbuckle.AspNetCore.Swagger": "9.0.1"
-        },
-        "runtime": {
-          "lib/net9.0/Swashbuckle.AspNetCore.SwaggerGen.dll": {
-            "assemblyVersion": "9.0.1.0",
-            "fileVersion": "9.0.1.1541"
-          }
-        }
-      },
-      "Swashbuckle.AspNetCore.SwaggerUI/9.0.1": {
-        "runtime": {
-          "lib/net9.0/Swashbuckle.AspNetCore.SwaggerUI.dll": {
-            "assemblyVersion": "9.0.1.0",
-            "fileVersion": "9.0.1.1541"
-          }
-        }
-      },
       "System.ClientModel/1.0.0": {
         "dependencies": {
           "System.Memory.Data": "1.0.2"
@@ -1010,19 +971,19 @@
       "path": "microsoft.aspnetcore.signalr.client.core/9.0.7",
       "hashPath": "microsoft.aspnetcore.signalr.client.core.9.0.7.nupkg.sha512"
     },
-    "Microsoft.Azure.SignalR/1.30.0": {
+    "Microsoft.Azure.SignalR/1.33.1": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-UsxG38lnS51QM0qd3psF5Q6wOjqc9ndBasE2VCabmNMTSHB2R+KCp34S8eQsvE2Cah7oOhPd4hET1zZxV1Mhuw==",
-      "path": "microsoft.azure.signalr/1.30.0",
-      "hashPath": "microsoft.azure.signalr.1.30.0.nupkg.sha512"
+      "sha512": "sha512-WdHXYYxR8Ed7EAivuK143oSQMAp3dDlql6pf7p5xwW/l5hxAM5IF9KlHE+SeHz0B5dg2jUnRNCYCAplVEcBHdg==",
+      "path": "microsoft.azure.signalr/1.33.1",
+      "hashPath": "microsoft.azure.signalr.1.33.1.nupkg.sha512"
     },
-    "Microsoft.Azure.SignalR.Protocols/1.30.0": {
+    "Microsoft.Azure.SignalR.Protocols/1.33.1": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-BQMQ8ecesc/iya5sxxaat/5i9oHfn5IPeum2c+coAnLfaJyyZhly4tAIvmZWRu0AsB2vThStH23v6JMV4w8L1g==",
-      "path": "microsoft.azure.signalr.protocols/1.30.0",
-      "hashPath": "microsoft.azure.signalr.protocols.1.30.0.nupkg.sha512"
+      "sha512": "sha512-LrYSu8y0aSrt1r50A40mcNPpOgHbHEKXkp069YvJcdOTj4E7X1ZKHOtBOfNAeu/O03qSkaOw+GACcf+JIhP/1A==",
+      "path": "microsoft.azure.signalr.protocols/1.33.1",
+      "hashPath": "microsoft.azure.signalr.protocols.1.33.1.nupkg.sha512"
     },
     "Microsoft.Bcl.AsyncInterfaces/7.0.0": {
       "type": "package",
@@ -1226,34 +1187,6 @@
       "sha512": "sha512-HrC5BXdl00IP9zeV+0Z848QWPAoCr9P3bDEZguI+gkLcBKAOxix/tLEAAHC+UvDNPv4a2d18lOReHMOagPa+zQ==",
       "path": "newtonsoft.json/13.0.3",
       "hashPath": "newtonsoft.json.13.0.3.nupkg.sha512"
-    },
-    "Swashbuckle.AspNetCore/9.0.1": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-lmaz0juKGq8VgeCOki98OUVdEH7rvgBST0QrlWXNOxBl7ujNWyqdqj2SMAdgpQfTtBlSQUTHRslRM+0j7El5tA==",
-      "path": "swashbuckle.aspnetcore/9.0.1",
-      "hashPath": "swashbuckle.aspnetcore.9.0.1.nupkg.sha512"
-    },
-    "Swashbuckle.AspNetCore.Swagger/9.0.1": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-4/9tBsbeCN+ewwqjEBPq3BszNE9tOvA1iDogwT7qW7L0Uh942IozhtF9VaICD70XyZIlKNiHjc2Vt5QE09P4nw==",
-      "path": "swashbuckle.aspnetcore.swagger/9.0.1",
-      "hashPath": "swashbuckle.aspnetcore.swagger.9.0.1.nupkg.sha512"
-    },
-    "Swashbuckle.AspNetCore.SwaggerGen/9.0.1": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-Za5w1NfLMF0Tt4GTgC491wfmuuMwNw8A5nwZuytpBd4UXYZxkwNJa3QnRYGbUQD9MjLzQCYnKc8rMrr5LglW6A==",
-      "path": "swashbuckle.aspnetcore.swaggergen/9.0.1",
-      "hashPath": "swashbuckle.aspnetcore.swaggergen.9.0.1.nupkg.sha512"
-    },
-    "Swashbuckle.AspNetCore.SwaggerUI/9.0.1": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-UuU+RvZbJZmnciVzi8G0jb3c6xeA4O8pQGrxl30eCK3pRNvurzZgS6shEei27q9wgvp0/UrTUNUM/a1kSlTfzw==",
-      "path": "swashbuckle.aspnetcore.swaggerui/9.0.1",
-      "hashPath": "swashbuckle.aspnetcore.swaggerui.9.0.1.nupkg.sha512"
     },
     "System.ClientModel/1.0.0": {
       "type": "package",

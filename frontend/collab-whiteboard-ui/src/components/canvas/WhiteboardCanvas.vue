@@ -123,7 +123,7 @@ function getRelativePointer(): { x: number; y: number } | null {
   return stage?.getRelativePointerPosition() ?? null
 }
 
-function onStageMouseDown(e: { target: { getStage: () => unknown } }) {
+function onStageMouseDown() {
   if (props.toolMode !== 'draw') return
   const pos = getRelativePointer()
   if (!pos) return
@@ -131,7 +131,7 @@ function onStageMouseDown(e: { target: { getStage: () => unknown } }) {
   activePath.value = [pos.x, pos.y]
 }
 
-function onStageMouseMove(e: unknown) {
+function onStageMouseMove() {
   const pos = getRelativePointer()
   if (!pos) return
 
