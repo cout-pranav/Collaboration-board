@@ -147,6 +147,18 @@ class SignalRService {
     this.connection?.on('UserLeft', handler)
   }
 
+  // ── Global Events ─────────────────────────────────────────────────────────
+  
+  private _boardCreatedHandler: ((board: any) => void) | null = null
+
+  onBoardCreated(handler: (board: any) => void): void {
+    if (this._boardCreatedHandler) {
+      this.connection?.off('BoardCreated', this._boardCreatedHandler)
+    }
+    this._boardCreatedHandler = handler
+    this.connection?.on('BoardCreated', handler)
+  }
+
   // ── Connection lifecycle handlers ─────────────────────────────────────────
 
   private _onReconnectingHandlers: Array<() => void> = []

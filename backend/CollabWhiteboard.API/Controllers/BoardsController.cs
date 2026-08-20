@@ -6,26 +6,26 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 
+using Microsoft.AspNetCore.SignalR;
+using CollabWhiteboard.API.Hubs;
+
 namespace CollabWhiteboard.API.Controllers;
 
 [ApiController]
 [Route("api/boards")]
 [Authorize]
-public class BoardsController(AppDbContext db) : ControllerBase
+public class BoardsController(AppDbContext db, IHubContext<WhiteboardHub> hubContext) : ControllerBase
 {
     private string CurrentUserId =>
         User.FindFirstValue(ClaimTypes.NameIdentifier)!;
 
-    // GET /api/boards — list boards the current user owns or is a member of
+    // GET /api/boards — list all boards
     [HttpGet]
     public async Task<IActionResult> GetBoards()
     {
-        var userId = CurrentUserId;
-
         var boards = await db.Boards
             .Include(b => b.Owner)
-            .Where(b => b.OwnerId == userId ||
-                        b.Members.Any(m => m.UserId == userId))
+            // Removed the Where clause so all boards act as a public workspace
             .OrderByDescending(b => b.UpdatedAt)
             .Select(b => new BoardResponse(
                 b.Id, b.Name, b.OwnerId, b.Owner.DisplayName,
@@ -94,9 +94,13 @@ public class BoardsController(AppDbContext db) : ControllerBase
         await db.SaveChangesAsync();
 
         var owner = await db.Users.FindAsync(CurrentUserId);
-        return CreatedAtAction(nameof(GetBoard), new { id = board.Id },
-            new BoardResponse(board.Id, board.Name, board.OwnerId,
-                owner!.DisplayName, board.CreatedAt, board.UpdatedAt));
+        var response = new BoardResponse(board.Id, board.Name, board.OwnerId,
+                owner!.DisplayName, board.CreatedAt, board.UpdatedAt);
+
+        // Broadcast to all connected clients that a new board was created
+        await hubContext.Clients.All.SendAsync("BoardCreated", response);
+
+        return CreatedAtAction(nameof(GetBoard), new { id = board.Id }, response);
     }
 
     // DELETE /api/boards/{id}

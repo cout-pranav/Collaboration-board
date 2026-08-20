@@ -86,6 +86,7 @@ import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/authStore'
 import { boardsApi } from '@/services/apiService'
+import { signalRService } from '@/services/signalrService'
 import type { Board } from '@/types/whiteboard'
 
 const authStore = useAuthStore()
@@ -113,6 +114,17 @@ function formatDate(iso: string): string {
 onMounted(async () => {
   try {
     boards.value = await boardsApi.list()
+
+    // Connect to SignalR to receive real-time updates for the dashboard
+    if (authStore.token) {
+      await signalRService.connect(authStore.token)
+      signalRService.onBoardCreated((newBoard) => {
+        // Prevent duplicates if we just created it ourselves
+        if (!boards.value.some((b) => b.id === newBoard.id)) {
+          boards.value.unshift(newBoard)
+        }
+      })
+    }
   } finally {
     isLoading.value = false
   }
