@@ -75,6 +75,20 @@
           <span v-else>{{ mode === 'login' ? 'Sign In' : 'Create Account' }}</span>
         </button>
       </form>
+
+      <div class="divider">
+        <span>OR</span>
+      </div>
+
+      <button @click="handleMicrosoftLogin" class="ms-btn" :disabled="authStore.isLoading">
+        <svg class="ms-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 21 21">
+          <path fill="#f35325" d="M0 0h10v10H0z"/>
+          <path fill="#81bc06" d="M11 0h10v10H11z"/>
+          <path fill="#05a6f0" d="M0 11h10v10H0z"/>
+          <path fill="#ffba08" d="M11 11h10v10H11z"/>
+        </svg>
+        Sign in with Microsoft
+      </button>
     </div>
   </div>
 </template>
@@ -102,6 +116,17 @@ async function submit() {
     router.push('/boards')
   } catch {
     // Error displayed via authStore.error
+  }
+}
+
+async function handleMicrosoftLogin() {
+  try {
+    const { loginWithMicrosoft } = await import('@/services/msalService')
+    const idToken = await loginWithMicrosoft()
+    await authStore.microsoftLogin(idToken)
+    router.push('/boards')
+  } catch (err) {
+    authStore.error = (err as Error).message ?? 'Microsoft login failed'
   }
 }
 </script>
@@ -239,5 +264,55 @@ async function submit() {
 .submit-btn:disabled {
   opacity: 0.6;
   cursor: not-allowed;
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin: 20px 0;
+  color: #94a3b8;
+  font-size: 12px;
+  font-weight: 500;
+}
+.divider::before,
+.divider::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid #e2e8f0;
+}
+.divider span {
+  padding: 0 10px;
+}
+
+.ms-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  width: 100%;
+  padding: 12px;
+  background: white;
+  color: #374151;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.ms-btn:hover:not(:disabled) {
+  background: #f8fafc;
+}
+
+.ms-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.ms-icon {
+  width: 18px;
+  height: 18px;
 }
 </style>

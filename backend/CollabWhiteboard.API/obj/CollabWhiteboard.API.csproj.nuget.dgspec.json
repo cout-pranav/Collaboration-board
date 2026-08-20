@@ -91,6 +91,10 @@
             "Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore": {
               "target": "Package",
               "version": "[9.0.7, )"
+            },
+            "Microsoft.IdentityModel.Protocols.OpenIdConnect": {
+              "target": "Package",
+              "version": "[8.22.0, )"
             }
           },
           "imports": [

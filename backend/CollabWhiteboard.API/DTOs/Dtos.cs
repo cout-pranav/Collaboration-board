@@ -11,6 +11,8 @@ public record LoginRequest(
     string Email,
     string Password);
 
+public record MicrosoftLoginRequest(string IdToken);
+
 public record AuthResponse(
     string Token,
     string UserId,

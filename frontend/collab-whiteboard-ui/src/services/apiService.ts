@@ -37,6 +37,9 @@ export const authApi = {
   login: (email: string, password: string): Promise<AuthUser> =>
     api.post<AuthUser>('/api/auth/login', { email, password }).then((r) => r.data),
 
+  microsoftLogin: (idToken: string): Promise<AuthUser> =>
+    api.post<AuthUser>('/api/auth/microsoft', { idToken }).then((r) => r.data),
+
   me: (): Promise<AuthUser> => api.get<AuthUser>('/api/auth/me').then((r) => r.data),
 }
 

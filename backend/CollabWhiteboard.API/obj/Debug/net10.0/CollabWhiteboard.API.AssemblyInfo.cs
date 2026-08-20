@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("CollabWhiteboard.API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e19bdbe4c9b24c56ab0dee297ae95a05365212b6")]
 [assembly: System.Reflection.AssemblyProductAttribute("CollabWhiteboard.API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("CollabWhiteboard.API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

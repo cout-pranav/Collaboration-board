@@ -71,5 +71,20 @@ export const useAuthStore = defineStore('auth', () => {
     localStorage.setItem('jwt_token', authUser.token)
   }
 
-  return { user, isAuthenticated, isLoading, error, restore, login, register, logout }
+  async function microsoftLogin(idToken: string): Promise<void> {
+    isLoading.value = true
+    error.value = null
+    try {
+      const authUser = await authApi.microsoftLogin(idToken)
+      _persist(authUser)
+      await signalRService.connect(authUser.token)
+    } catch (e: unknown) {
+      error.value = (e as Error).message ?? 'Microsoft Login failed'
+      throw e
+    } finally {
+      isLoading.value = false
+    }
+  }
+
+  return { user, isAuthenticated, isLoading, error, restore, login, register, microsoftLogin, logout }
 })

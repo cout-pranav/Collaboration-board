@@ -3,6 +3,8 @@ using CollabWhiteboard.API.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Protocols;
+using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -46,6 +48,63 @@ public class AuthController(
 
         var token = GenerateJwtToken(user);
         return Ok(new AuthResponse(token, user.Id, user.Email!, user.DisplayName, user.AvatarColor));
+    }
+
+    // POST /api/auth/microsoft
+    [HttpPost("microsoft")]
+    public async Task<IActionResult> MicrosoftLogin([FromBody] MicrosoftLoginRequest request)
+    {
+        var configurationManager = new ConfigurationManager<OpenIdConnectConfiguration>(
+            "https://login.microsoftonline.com/common/v2.0/.well-known/openid-configuration",
+            new OpenIdConnectConfigurationRetriever());
+            
+        var openIdConfig = await configurationManager.GetConfigurationAsync(CancellationToken.None);
+        
+        var validationParameters = new TokenValidationParameters
+        {
+            ValidateAudience = true,
+            ValidAudience = "f000bbcc-7cfa-4cf7-899c-cb345918ba98",
+            ValidateIssuer = false, // common endpoint issuer varies based on the user's actual tenant
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKeys = openIdConfig.SigningKeys,
+            ValidateLifetime = true
+        };
+
+        var handler = new JwtSecurityTokenHandler();
+        try
+        {
+            var principal = handler.ValidateToken(request.IdToken, validationParameters, out var validatedToken);
+            
+            // Extract claims
+            var email = principal.FindFirst("preferred_username")?.Value ?? principal.FindFirst(ClaimTypes.Email)?.Value;
+            var name = principal.FindFirst("name")?.Value ?? principal.FindFirst(ClaimTypes.Name)?.Value ?? "Microsoft User";
+            
+            if (string.IsNullOrEmpty(email))
+                return BadRequest("Email claim not found in token.");
+
+            // Check if user exists
+            var user = await userManager.FindByEmailAsync(email);
+            if (user is null)
+            {
+                user = new ApplicationUser
+                {
+                    UserName = email,
+                    Email = email,
+                    DisplayName = name,
+                    AvatarColor = GenerateAvatarColor(email),
+                };
+                var result = await userManager.CreateAsync(user);
+                if (!result.Succeeded)
+                    return BadRequest("Failed to create user account.");
+            }
+
+            var token = GenerateJwtToken(user);
+            return Ok(new AuthResponse(token, user.Id, user.Email!, user.DisplayName, user.AvatarColor));
+        }
+        catch (Exception ex)
+        {
+            return Unauthorized($"Invalid Microsoft token: {ex.Message}");
+        }
     }
 
     // GET /api/auth/me
