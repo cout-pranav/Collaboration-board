@@ -1,5 +1,6 @@
 import * as signalR from '@microsoft/signalr'
 import type { CursorPosition, PresenceInfo } from './signalrTypes'
+import type { Board } from '@/types/whiteboard'
 
 type YjsUpdateHandler = (update: Uint8Array) => void
 type CursorHandler = (cursor: CursorPosition) => void
@@ -149,9 +150,9 @@ class SignalRService {
 
   // ── Global Events ─────────────────────────────────────────────────────────
   
-  private _boardCreatedHandler: ((board: any) => void) | null = null
+  private _boardCreatedHandler: ((board: Board) => void) | null = null
 
-  onBoardCreated(handler: (board: any) => void): void {
+  onBoardCreated(handler: (board: Board) => void): void {
     if (this._boardCreatedHandler) {
       this.connection?.off('BoardCreated', this._boardCreatedHandler)
     }

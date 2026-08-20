@@ -34,6 +34,20 @@
         />
       </v-layer>
 
+      <!-- Text layer — native text nodes -->
+      <v-layer>
+        <TextNodeComponent
+          v-for="text in whiteboardStore.textNodes"
+          :key="text.id"
+          :node="text"
+          :is-selected="selectedTextId === text.id"
+          @select="selectedTextId = text.id"
+          @deselect="selectedTextId = null"
+          @update="whiteboardStore.updateText(text.id, $event)"
+          @delete="whiteboardStore.deleteText(text.id)"
+        />
+      </v-layer>
+
       <!-- Cursor layer — remote user cursors (topmost) -->
       <CursorLayer :cursors="Array.from(presenceStore.cursors.values())" />
     </v-stage>
@@ -47,10 +61,11 @@ import { usePresenceStore } from '@/stores/presenceStore'
 import { useAuthStore } from '@/stores/authStore'
 import DrawLayer from './DrawLayer.vue'
 import StickyCard from './StickyCard.vue'
+import TextNodeComponent from './TextNodeComponent.vue'
 import CursorLayer from './CursorLayer.vue'
 
 const props = defineProps<{
-  toolMode: 'select' | 'draw' | 'card' | 'pan'
+  toolMode: 'select' | 'draw' | 'card' | 'pan' | 'text'
   drawColor: string
   drawStrokeWidth: number
   connectionStatus: 'connected' | 'reconnecting' | 'disconnected'
@@ -59,6 +74,7 @@ const props = defineProps<{
 const emit = defineEmits<{
   cursorMove: [x: number, y: number]
   addCard: [x: number, y: number]
+  addText: [x: number, y: number]
 }>()
 
 const whiteboardStore = useWhiteboardStore()
@@ -68,6 +84,7 @@ const authStore = useAuthStore()
 const containerRef = ref<HTMLDivElement>()
 const stageRef = ref()
 const selectedCardId = ref<string | null>(null)
+const selectedTextId = ref<string | null>(null)
 
 // ── Stage sizing ──────────────────────────────────────────────────────────────
 
@@ -157,13 +174,26 @@ function onStageMouseUp() {
 }
 
 function onStageClick(e: { target: { getStage: () => unknown } }) {
-  if (props.toolMode !== 'card') return
+  if (props.toolMode !== 'card' && props.toolMode !== 'text') {
+    // Clear selection if clicking empty canvas with select tool
+    if (props.toolMode === 'select' && e.target === stageRef.value?.getStage()) {
+      selectedCardId.value = null
+      selectedTextId.value = null
+    }
+    return
+  }
+  
   const stage = stageRef.value?.getStage()
-  // Only add card if clicking on empty stage (not on a shape)
+  // Only add card/text if clicking on empty stage (not on an existing shape)
   if (e.target !== stage) return
   const pos = getRelativePointer()
   if (!pos) return
-  emit('addCard', pos.x, pos.y)
+
+  if (props.toolMode === 'card') {
+    emit('addCard', pos.x, pos.y)
+  } else if (props.toolMode === 'text') {
+    emit('addText', pos.x, pos.y)
+  }
 }
 </script>
 

@@ -83,6 +83,7 @@ const tools: Array<{ mode: ToolMode; icon: string; label: string }> = [
   { mode: 'select', icon: '↖', label: 'Select' },
   { mode: 'draw', icon: '✏️', label: 'Draw' },
   { mode: 'card', icon: '🗒', label: 'Card' },
+  { mode: 'text', icon: 'T', label: 'Text' },
   { mode: 'pan', icon: '✋', label: 'Pan' },
 ]
 </script>

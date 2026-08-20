@@ -17,6 +17,7 @@
       :connection-status="connectionStatus"
       @cursor-move="onCursorMove"
       @add-card="onAddCard"
+      @add-text="onAddText"
     />
 
     <div v-if="isLoading" class="loading-overlay">
@@ -87,7 +88,17 @@ function onAddCard(x: number, y: number) {
     color: drawColor.value,
     authorId: authStore.user?.userId ?? 'unknown',
   })
-  // Switch back to select after placing a card
+  toolMode.value = 'select'
+}
+
+function onAddText(x: number, y: number) {
+  whiteboardStore.addText({
+    x,
+    y,
+    color: drawColor.value,
+    fontSize: Math.max(16, strokeWidth.value * 6), // Scale font with stroke width
+    authorId: authStore.user?.userId ?? 'unknown',
+  })
   toolMode.value = 'select'
 }
 

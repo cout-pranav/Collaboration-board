@@ -43,6 +43,17 @@ export interface DrawPath {
   authorId: string
 }
 
+export interface TextNode {
+  id: string
+  text: string
+  color: string
+  fontSize: number
+  x: number
+  y: number
+  zIndex: number
+  authorId: string
+}
+
 // ── Presence ─────────────────────────────────────────────────────────────────
 
 export interface CursorState {
@@ -72,4 +83,4 @@ export interface AuthUser {
 
 // ── Tool mode ─────────────────────────────────────────────────────────────────
 
-export type ToolMode = 'select' | 'draw' | 'card' | 'pan'
+export type ToolMode = 'select' | 'draw' | 'card' | 'pan' | 'text'

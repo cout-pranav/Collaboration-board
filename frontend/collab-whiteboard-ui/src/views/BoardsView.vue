@@ -116,8 +116,8 @@ onMounted(async () => {
     boards.value = await boardsApi.list()
 
     // Connect to SignalR to receive real-time updates for the dashboard
-    if (authStore.token) {
-      await signalRService.connect(authStore.token)
+    if (authStore.user?.token) {
+      await signalRService.connect(authStore.user.token)
       signalRService.onBoardCreated((newBoard) => {
         // Prevent duplicates if we just created it ourselves
         if (!boards.value.some((b) => b.id === newBoard.id)) {
