@@ -37,3 +37,16 @@ export async function loginWithMicrosoft() {
   // This is 100x more stable and immune to popup blockers.
   await msalInstance.loginRedirect(loginRequest)
 }
+
+export async function logoutMicrosoft() {
+  await initMsal()
+  const account = msalInstance.getAllAccounts()[0]
+  if (account) {
+    await msalInstance.logoutRedirect({
+      account,
+      postLogoutRedirectUri: window.location.origin + '/login',
+    })
+    return true
+  }
+  return false
+}

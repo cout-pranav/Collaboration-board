@@ -12,10 +12,14 @@
       ref="stageRef"
       :config="stageConfig"
       @mousedown="onStageMouseDown"
+      @touchstart="onStageMouseDown"
       @mousemove="onStageMouseMove"
+      @touchmove="onStageMouseMove"
       @mouseup="onStageMouseUp"
+      @touchend="onStageMouseUp"
       @wheel="onWheel"
       @click="onStageClick"
+      @tap="onStageClick"
     >
       <!-- Draw layer — freehand paths (below cards) -->
       <DrawLayer :paths="whiteboardStore.drawPaths" />
@@ -204,6 +208,7 @@ function onStageClick(e: { target: { getStage: () => unknown } }) {
   background: #f8fafc;
   background-image: radial-gradient(circle, #cbd5e1 1px, transparent 1px);
   background-size: 24px 24px;
+  touch-action: none; /* Prevents mobile browser pull-to-refresh and scrolling when drawing */
 }
 
 .connection-banner {

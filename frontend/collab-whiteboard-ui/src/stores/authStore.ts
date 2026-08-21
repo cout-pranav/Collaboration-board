@@ -63,6 +63,13 @@ export const useAuthStore = defineStore('auth', () => {
     user.value = null
     localStorage.removeItem('auth_user')
     localStorage.removeItem('jwt_token')
+    
+    try {
+      const { logoutMicrosoft } = await import('@/services/msalService')
+      await logoutMicrosoft()
+    } catch (e) {
+      console.error('Failed to log out of Microsoft', e)
+    }
   }
 
   function _persist(authUser: AuthUser): void {
