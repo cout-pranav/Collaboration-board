@@ -108,11 +108,22 @@ const password = ref('')
 const displayName = ref('')
 const isMsLoading = ref(false)
 
-onMounted(() => {
-  // We must initialize MSAL as soon as this page loads!
-  // When Microsoft redirects back to this page inside the popup, 
-  // initializing MSAL allows it to detect the popup, send the token to the parent, and close itself.
-  initMsal()
+onMounted(async () => {
+  // Initialize MSAL. If we just got redirected back from Microsoft,
+  // this will automatically parse the token and return it!
+  try {
+    isMsLoading.value = true
+    const msResult = await initMsal()
+    if (msResult && msResult.idToken) {
+      // We just successfully logged into Microsoft! Send the token to our C# backend.
+      await authStore.microsoftLogin(msResult.idToken)
+      router.push('/boards')
+    }
+  } catch (err) {
+    authStore.error = (err as Error).message ?? 'Microsoft login failed during redirect.'
+  } finally {
+    isMsLoading.value = false
+  }
 })
 
 async function submit() {
@@ -133,12 +144,11 @@ async function handleMicrosoftLogin() {
   isMsLoading.value = true
   
   try {
-    const idToken = await loginWithMicrosoft()
-    await authStore.microsoftLogin(idToken)
-    router.push('/boards')
+    // This will redirect the ENTIRE page to Microsoft.
+    // The code execution stops here as the browser leaves the site.
+    await loginWithMicrosoft()
   } catch (err) {
-    authStore.error = (err as Error).message ?? 'Microsoft login failed'
-  } finally {
+    authStore.error = (err as Error).message ?? 'Failed to redirect to Microsoft.'
     isMsLoading.value = false
   }
 }

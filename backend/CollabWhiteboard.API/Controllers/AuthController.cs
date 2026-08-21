@@ -50,15 +50,17 @@ public class AuthController(
         return Ok(new AuthResponse(token, user.Id, user.Email!, user.DisplayName, user.AvatarColor));
     }
 
+    // Cache the OpenID Configuration Manager so it doesn't download keys from Microsoft on every request!
+    private static readonly ConfigurationManager<OpenIdConnectConfiguration> _configurationManager = 
+        new ConfigurationManager<OpenIdConnectConfiguration>(
+            "https://login.microsoftonline.com/common/v2.0/.well-known/openid-configuration",
+            new OpenIdConnectConfigurationRetriever());
+
     // POST /api/auth/microsoft
     [HttpPost("microsoft")]
     public async Task<IActionResult> MicrosoftLogin([FromBody] MicrosoftLoginRequest request)
     {
-        var configurationManager = new ConfigurationManager<OpenIdConnectConfiguration>(
-            "https://login.microsoftonline.com/common/v2.0/.well-known/openid-configuration",
-            new OpenIdConnectConfigurationRetriever());
-            
-        var openIdConfig = await configurationManager.GetConfigurationAsync(CancellationToken.None);
+        var openIdConfig = await _configurationManager.GetConfigurationAsync(CancellationToken.None);
         
         var validationParameters = new TokenValidationParameters
         {

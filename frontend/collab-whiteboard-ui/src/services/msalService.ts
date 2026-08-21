@@ -1,4 +1,4 @@
-import { PublicClientApplication, type Configuration } from '@azure/msal-browser'
+import { PublicClientApplication, type Configuration, type AuthenticationResult } from '@azure/msal-browser'
 
 const msalConfig: Configuration = {
   auth: {
@@ -13,16 +13,14 @@ const msalConfig: Configuration = {
 
 export const msalInstance = new PublicClientApplication(msalConfig)
 
-let initPromise: Promise<void> | null = null
+let initPromise: Promise<AuthenticationResult | null> | null = null
 
-export function initMsal(): Promise<void> {
+export function initMsal(): Promise<AuthenticationResult | null> {
   if (!initPromise) {
     initPromise = (async () => {
       await msalInstance.initialize()
-      // Critical: MSAL requires handleRedirectPromise to be called on page load.
-      // In a popup, this parses the authentication hash, sends the token to the parent window,
-      // and then automatically calls window.close()!
-      await msalInstance.handleRedirectPromise()
+      // Parses the URL hash if we just came back from Microsoft, returns the auth result
+      return await msalInstance.handleRedirectPromise()
     })()
   }
   return initPromise
@@ -35,12 +33,7 @@ export async function loginWithMicrosoft() {
     scopes: ['openid', 'profile', 'email'],
   }
 
-  try {
-    const response = await msalInstance.loginPopup(loginRequest)
-    // The idToken is what we need to send to our backend
-    return response.idToken
-  } catch (error) {
-    console.error('Microsoft login failed:', error)
-    throw error
-  }
+  // Redirects the whole page to Microsoft instead of using a popup. 
+  // This is 100x more stable and immune to popup blockers.
+  await msalInstance.loginRedirect(loginRequest)
 }
