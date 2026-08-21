@@ -13,8 +13,13 @@ const msalConfig: Configuration = {
 
 export const msalInstance = new PublicClientApplication(msalConfig)
 
+let initPromise: Promise<void> | null = null
+
 export async function loginWithMicrosoft() {
-  await msalInstance.initialize()
+  if (!initPromise) {
+    initPromise = msalInstance.initialize()
+  }
+  await initPromise
   
   const loginRequest = {
     scopes: ['openid', 'profile', 'email'],

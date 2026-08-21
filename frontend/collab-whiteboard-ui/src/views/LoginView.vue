@@ -80,14 +80,14 @@
         <span>OR</span>
       </div>
 
-      <button @click="handleMicrosoftLogin" class="ms-btn" :disabled="authStore.isLoading">
+      <button @click="handleMicrosoftLogin" type="button" class="ms-btn" :disabled="isMsLoading || authStore.isLoading">
         <svg class="ms-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 21 21">
           <path fill="#f35325" d="M0 0h10v10H0z"/>
           <path fill="#81bc06" d="M11 0h10v10H11z"/>
           <path fill="#05a6f0" d="M0 11h10v10H0z"/>
           <path fill="#ffba08" d="M11 11h10v10H11z"/>
         </svg>
-        Sign in with Microsoft
+        {{ isMsLoading ? 'Loading...' : 'Sign in with Microsoft' }}
       </button>
     </div>
   </div>
@@ -105,6 +105,7 @@ const mode = ref<'login' | 'register'>('login')
 const email = ref('')
 const password = ref('')
 const displayName = ref('')
+const isMsLoading = ref(false)
 
 async function submit() {
   try {
@@ -120,6 +121,9 @@ async function submit() {
 }
 
 async function handleMicrosoftLogin() {
+  if (isMsLoading.value || authStore.isLoading) return
+  isMsLoading.value = true
+  
   try {
     const { loginWithMicrosoft } = await import('@/services/msalService')
     const idToken = await loginWithMicrosoft()
@@ -127,6 +131,8 @@ async function handleMicrosoftLogin() {
     router.push('/boards')
   } catch (err) {
     authStore.error = (err as Error).message ?? 'Microsoft login failed'
+  } finally {
+    isMsLoading.value = false
   }
 }
 </script>
