@@ -15,11 +15,21 @@ export const msalInstance = new PublicClientApplication(msalConfig)
 
 let initPromise: Promise<void> | null = null
 
-export async function loginWithMicrosoft() {
+export function initMsal(): Promise<void> {
   if (!initPromise) {
-    initPromise = msalInstance.initialize()
+    initPromise = (async () => {
+      await msalInstance.initialize()
+      // Critical: MSAL requires handleRedirectPromise to be called on page load.
+      // In a popup, this parses the authentication hash, sends the token to the parent window,
+      // and then automatically calls window.close()!
+      await msalInstance.handleRedirectPromise()
+    })()
   }
-  await initPromise
+  return initPromise
+}
+
+export async function loginWithMicrosoft() {
+  await initMsal()
   
   const loginRequest = {
     scopes: ['openid', 'profile', 'email'],

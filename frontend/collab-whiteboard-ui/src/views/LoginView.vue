@@ -94,9 +94,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/authStore'
+import { initMsal, loginWithMicrosoft } from '@/services/msalService'
 
 const authStore = useAuthStore()
 const router = useRouter()
@@ -106,6 +107,13 @@ const email = ref('')
 const password = ref('')
 const displayName = ref('')
 const isMsLoading = ref(false)
+
+onMounted(() => {
+  // We must initialize MSAL as soon as this page loads!
+  // When Microsoft redirects back to this page inside the popup, 
+  // initializing MSAL allows it to detect the popup, send the token to the parent, and close itself.
+  initMsal()
+})
 
 async function submit() {
   try {
@@ -125,7 +133,6 @@ async function handleMicrosoftLogin() {
   isMsLoading.value = true
   
   try {
-    const { loginWithMicrosoft } = await import('@/services/msalService')
     const idToken = await loginWithMicrosoft()
     await authStore.microsoftLogin(idToken)
     router.push('/boards')
